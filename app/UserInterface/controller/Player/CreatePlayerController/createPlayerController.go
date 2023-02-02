@@ -1,4 +1,4 @@
-package controller
+package CreatePlayerController
 
 import (
 	"encoding/json"

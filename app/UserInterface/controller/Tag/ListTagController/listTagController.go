@@ -1,4 +1,4 @@
-package controller
+package ListTagController
 
 import (
 	"encoding/json"

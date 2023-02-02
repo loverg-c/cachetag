@@ -1,24 +1,10 @@
-package controller
+package GetScorePerPlayer
 
 import (
 	"encoding/json"
 	"net/http"
 	"tags-finder/Infrastructure/Database/Repository"
 )
-
-func PlayersIndex(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/json;charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-
-	json.NewEncoder(w).Encode(repository.GetAllPlayer())
-}
-
-func PlayerHasValidateTagIndex(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/json;charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-
-	json.NewEncoder(w).Encode(repository.GetAllPlayerHasValidateTag())
-}
 
 func GetScorePerPlayers(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json;charset=UTF-8")

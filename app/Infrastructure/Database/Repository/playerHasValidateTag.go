@@ -14,10 +14,14 @@ func NewPlayerHasValidateTag(p *m.PlayerHasValidateTag) {
 	}
 	p.ValidatedAt = time.Now()
 
-	err := config.Db().QueryRow("INSERT INTO player_has_validate_tag (player_id, tag_id, validated_at) VALUES ($1,$2,$3);", p.PlayerId, p.TagId, p.ValidatedAt)
+	row := config.Db().QueryRow(
+		`
+INSERT INTO player_has_validate_tag (player_id, tag_id, validated_at)
+VALUES ($1,$2,$3);`,
+		p.PlayerId, p.TagId, p.ValidatedAt)
 
-	if err != nil {
-		log.Fatal(err)
+	if row.Err() != nil {
+		log.Println(row.Err())
 	}
 }
 
@@ -122,4 +126,3 @@ func GetAllPlayerHasValidateTag() *m.PlayerHasValidateTags {
 
 	return parsePlayerHasTagsRows(rows)
 }
-
