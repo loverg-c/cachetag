@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  app:
+    build: app
+    ports:
+      - 8080:8080
+    volumes:
+      - ./app:/app
+    networks:
+      - net_backend
+    links:
+      - database
+      - mercure
+    depends_on:
+      - database
+      - mercure
+
+  database:
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+    networks:
+      - net_backend
+
+  mercure:
+    image: dunglas/mercure
+    restart: unless-stopped
+    environment:
+      MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_EXTRA_DIRECTIVES: |-
+        cors_origins *
+    # Uncomment the following line to enable the development mode
+    command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - net_backend
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+networks:
+  net_backend:
+    driver: bridge
+volumes:
+  db-data:
+  caddy_data:
+  caddy_config:
