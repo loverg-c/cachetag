@@ -2,10 +2,7 @@ package controller
 
 import (
 	"encoding/json"
-	"io/ioutil"
-	"log"
 	"net/http"
-	"tags-finder/Domain/model"
 	"tags-finder/Infrastructure/Database/Repository"
 )
 
@@ -21,29 +18,6 @@ func PlayerHasValidateTagIndex(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	json.NewEncoder(w).Encode(repository.GetAllPlayerHasValidateTag())
-}
-
-func PlayerCreateIndex(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/json;charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-
-	body, err := ioutil.ReadAll(r.Body)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var player model.Player
-
-	err = json.Unmarshal(body, &player)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	repository.NewPlayer(&player)
-
-	json.NewEncoder(w).Encode(player)
 }
 
 func GetScorePerPlayers(w http.ResponseWriter, r *http.Request) {

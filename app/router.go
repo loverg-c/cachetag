@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gorilla/mux"
 	"tags-finder/UserInterface/controller"
+	playerController "tags-finder/UserInterface/controller/player"
 )
 
 func InitializeRouter() *mux.Router {
@@ -12,7 +13,7 @@ func InitializeRouter() *mux.Router {
 	router.Methods("GET").Path("/players").
 		Name("PlayerIndex").HandlerFunc(controller.PlayersIndex)
 	router.Methods("POST").Path("/players").
-		Name("PlayerCreateIndex").HandlerFunc(controller.PlayerCreateIndex)
+		Name("PlayerCreateIndex").HandlerFunc(playerController.PlayerCreateIndex)
 
 	router.Methods("GET").Path("/tags").
 		Name("TagIndex").HandlerFunc(controller.TagsIndex)

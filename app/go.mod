@@ -9,6 +9,7 @@ require (
 )
 
 require (
+	github.com/go-playground/validator/v10 v10.11.2 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.3 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/rs/cors v1.8.3 // indirect
