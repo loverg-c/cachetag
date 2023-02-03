@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Dreamland";
+    src: local("Dreamland"),
+    url("../fonts/Dreamland Std Regular.otf") format("opentype");
+}
+
+body {
+    font-family: Dreamland;
+    -webkit-font-smoothing: antialiased;
+    background: #445d80;
+}
+
+header {
+    display: flex;
+    margin-top: 4vh;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}

@@ -1,0 +1,11 @@
+:80 {
+    handle_path /score/* {
+          root * /srv/score
+  	}
+    handle_path /game/* {
+          root * /srv/game
+  	}
+    file_server {
+        hide .git
+    }
+}

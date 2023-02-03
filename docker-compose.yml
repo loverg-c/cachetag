@@ -30,6 +30,17 @@ services:
     networks:
       - net_backend
 
+  front:
+    image: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/tableau-de-score:/srv/score
+      - $PWD/game:/srv/game
+      - caddy_data:/data
+      - caddy_config:/config
 #  mercure:
 #    image: dunglas/mercure
 #    restart: unless-stopped
@@ -54,5 +65,6 @@ networks:
     driver: bridge
 volumes:
   db-data:
-#  caddy_data:
-#  caddy_config:
+  caddy_data:
+    external: true
+  caddy_config:
