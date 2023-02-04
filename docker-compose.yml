@@ -66,5 +66,5 @@ networks:
 volumes:
   db-data:
   caddy_data:
-    external: true
+#    external: true
   caddy_config:

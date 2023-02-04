@@ -7,7 +7,7 @@
 @font-face {
     font-family: "Dreamland";
     src: local("Dreamland"),
-    url("/fonts/Dreamland Std Regular.otf") format("opentype");
+    url("../fonts/Dreamland Std Regular.otf") format("opentype");
 }
 
 body {
@@ -16,7 +16,7 @@ body {
     background: #445d80;
 }
 
-header {
+main {
     display: flex;
     margin-top: 4vh;
     justify-content: center;
@@ -24,7 +24,7 @@ header {
     height: 90vh;
 }
 
-.score-wrapper {
+.wrapper {
     color: #586e8d;
     background: white;
     min-height: 400px;
@@ -37,47 +37,46 @@ header {
     box-shadow: 10px 10px 2px rgba(35, 50, 68, 0.4);
 }
 
-.score-wrapper h1 {
-    font-family: Dreamland;
+.wrapper h1 {
     text-align: center;
     margin-bottom: 40px;
     color: #f1dc6d;
 }
 
-.score-wrapper .score {
+.wrapper .score {
     border-bottom: 2px solid #f1dc6d;
     margin-bottom: 15px;
     margin-left: 40px;
     margin-right: 40px;
 }
 
-.score-wrapper .score .position {
+.wrapper .score .position {
     font-weight: bolder;
     margin-left: 10%;
     width: 20%;
     display: inline-block;
 }
 
-.score-wrapper .score .username {
+.wrapper .score .username {
     width: 40%;
     display: inline-block;
 }
 
-.score-wrapper .score .score-value {
+.wrapper .score .score-value {
     width: 20%;
     text-align: right;
     display: inline-block;
 }
 
 
-.score-wrapper .score.first * {
+.wrapper .score.first * {
     color: gold;
 }
 
-.score-wrapper .score.second * {
+.wrapper .score.second * {
     color: silver;
 }
 
-.score-wrapper .score.third * {
+.wrapper .score.third * {
     color: brown;
 }
