@@ -61,6 +61,16 @@ main {
     width: 90%;;
 }
 
+.wrapper form#validation .field {
+    justify-content: center;
+}
+
+.wrapper form select {
+    background: #f1dc6d;
+    font-size: 17px;
+    font-family: Dreamland;
+}
+
 .wrapper form .button {
     background: #f1dc6d;
     font-family: Dreamland;
