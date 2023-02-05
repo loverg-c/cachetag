@@ -22,17 +22,17 @@ func NewPlayer(p *m.Player) {
 	}
 }
 
-func FindPlayerById(id int) *m.Player {
+func FindPlayerByUsername(username string) (*m.Player, error) {
 	var player m.Player
 
-	row := config.Db().QueryRow("SELECT * FROM players WHERE id = $1;", id)
+	row := config.Db().QueryRow("SELECT * FROM players WHERE username = $1 LIMIT 1;", username)
 	err := row.Scan(&player.Id, &player.Username, &player.CreatedAt, &player.UpdatedAt)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return &player
+	return &player, nil
 }
 
 func GetAllPlayer() *m.Players {

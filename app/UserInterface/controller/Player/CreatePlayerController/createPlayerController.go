@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	Command "tags-finder/Application/Command/Player/CreatePlayer"
+	Query "tags-finder/Application/Query/Player/GetPlayer"
 	"tags-finder/Infrastructure/Validator"
 	"tags-finder/UserInterface/controller"
 )
@@ -21,6 +22,13 @@ func PlayerCreateIndex(w http.ResponseWriter, r *http.Request) {
 
 	if ok, errors := Validator.ValidateInputs(input); !ok {
 		controller.ValidationResponse(errors, w)
+		return
+	}
+
+	existingPlayer := Query.HandleGetPlayer(Query.GetPlayer{Username: input.Username})
+
+	if existingPlayer != nil {
+		controller.ErrorResponse(http.StatusConflict, "Player already exist", w)
 		return
 	}
 

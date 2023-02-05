@@ -5,6 +5,7 @@
     handle_path /game/* {
           root * /srv/game
   	}
+
     file_server {
         hide .git
     }

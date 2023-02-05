@@ -84,7 +84,16 @@ main {
 .wrapper form .field input {
     width: 60%;
     background: #f1dc6d5e;
-padding-left: 10px;
+    padding-left: 10px;
     font-size: 16px;
 }
 
+#welcoming-message {
+    text-align: center;
+    width: 100%;
+    /*color: #5fc100;*/
+}
+
+#welcoming-message .surlign {
+    color: #f1dc6d;
+}

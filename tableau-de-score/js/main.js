@@ -1,22 +1,23 @@
+const serverAddr = window.location.protocol + '//' + window.location.hostname + ":8080";
+
 function loadScore() {
     httpRequest = new XMLHttpRequest();
 
     httpRequest.onreadystatechange = function () {
-
-        if (httpRequest.readyState == 4) {
-            //the request is completed, now check its status
+        if (httpRequest.readyState === 4) {
             if (httpRequest.status == 200) {
                 parseScore(httpRequest.responseText);
             } else {
-                console.log("Status error: " + httpRequest.status);
+                alert("Status error: " + httpRequest.status);
             }
-        } else {
-            console.log("Ignored readyState: " + httpRequest.readyState);
         }
     }
-
-    httpRequest.open("GET", "http://localhost:8080/players/scores", true);
-    httpRequest.send();
+    try {
+        httpRequest.open("GET", serverAddr + "/players/scores", true);
+        httpRequest.send();
+    } catch (e) {
+        alert(JSON.stringify(e));
+    }
 }
 
 function parseScore(response) {
@@ -24,6 +25,9 @@ function parseScore(response) {
     document.getElementById("score-list").innerHTML = null;
 
     const scores = JSON.parse(response)?.sort((a, b) => {
+        if (b.score === a.score) {
+            return ('' + a.username).localeCompare(b.username);
+        }
         return b.score - a.score;
     }) ?? [];
 
@@ -66,14 +70,14 @@ function parseScore(response) {
     });
 }
 
-function loadMercure() {
-    const url = new URL('https://localhost/.well-known/mercure');
-    url.searchParams.append('topic', 'https://example.com/my-private-topic');
-
-    const eventSource = new EventSource(url);
-
-    eventSource.onmessage = e => parseScore(e.data); // do something with the payload
-}
+// function loadMercure() {
+//     const url = new URL('https://localhost/.well-known/mercure');
+//     url.searchParams.append('topic', 'https://example.com/my-private-topic');
+//
+//     const eventSource = new EventSource(url);
+//
+//     eventSource.onmessage = e => parseScore(e.data); // do something with the payload
+// }
 
 loadScore()
-loadMercure()
+// loadMercure()

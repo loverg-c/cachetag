@@ -14,7 +14,7 @@ func main() {
 	router := InitializeRouter()
 	Validator.InitValidate()
 
-	handler := cors.Default().Handler(router)
+	handler := cors.AllowAll().Handler(router)
 
 	log.Fatal(http.ListenAndServe(":8080", handler))
 }
