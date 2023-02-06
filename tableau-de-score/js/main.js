@@ -1,5 +1,35 @@
 const serverAddr = window.location.protocol + '//' + window.location.hostname;
 
+function loadMax() {
+    httpRequestNbTag = new XMLHttpRequest();
+
+    httpRequestNbTag.onreadystatechange = function () {
+        if (httpRequestNbTag.readyState === 4) {
+            if (httpRequestNbTag.status == 200) {
+                parseMax(httpRequestNbTag.responseText);
+            } else {
+                alert("Status error: " + httpRequestNbTag.status);
+            }
+        }
+    }
+    try {
+        httpRequestNbTag.open("GET", serverAddr + ":8080/tags", true);
+        httpRequestNbTag.send();
+    } catch (e) {
+        alert(JSON.stringify(e));
+    }
+}
+
+
+function parseMax(response) {
+    const tagList = JSON.parse(response);
+
+    const maxScore = tagList.reduce((partialSum, a) => partialSum + a.score, 0);
+
+    const info = document.getElementById("max-tag");
+    info.innerHTML = `Le score maximum possible est de <span class="surlign">${maxScore} points</span>`;
+}
+
 function loadScore() {
     httpRequest = new XMLHttpRequest();
 
@@ -21,7 +51,6 @@ function loadScore() {
 }
 
 function parseScore(response) {
-    // alert(response)
     document.getElementById("score-list").innerHTML = null;
 
     const scores = JSON.parse(response)?.sort((a, b) => {
@@ -36,7 +65,7 @@ function parseScore(response) {
 
     scores.forEach(function (score) {
         let line = document.createElement('div');
-        line.classList.add("score")
+        line.classList.add("score");
 
         if (previousScore !== score.score) {
             positionValue++;
@@ -78,7 +107,7 @@ function displayNotification() {
     setTimeout(function () {
         alertPopup.classList.add('hidden');
         alertPopup.classList.remove('show');
-    }, 3000)
+    }, 3000);
 }
 
 function loadMercure() {
@@ -92,5 +121,11 @@ function loadMercure() {
     }
 }
 
-loadScore()
-loadMercure()
+function init() {
+    loadMax();
+    loadScore();
+    loadMercure();
+
+}
+
+init();
