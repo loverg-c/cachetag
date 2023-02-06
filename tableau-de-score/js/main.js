@@ -1,4 +1,4 @@
-const serverAddr = window.location.protocol + '//' + window.location.hostname + ":8080";
+const serverAddr = window.location.protocol + '//' + window.location.hostname;
 
 function loadScore() {
     httpRequest = new XMLHttpRequest();
@@ -13,7 +13,7 @@ function loadScore() {
         }
     }
     try {
-        httpRequest.open("GET", serverAddr + "/players/scores", true);
+        httpRequest.open("GET", serverAddr + ":8080/players/scores", true);
         httpRequest.send();
     } catch (e) {
         alert(JSON.stringify(e));
@@ -21,7 +21,7 @@ function loadScore() {
 }
 
 function parseScore(response) {
-
+    // alert(response)
     document.getElementById("score-list").innerHTML = null;
 
     const scores = JSON.parse(response)?.sort((a, b) => {
@@ -70,14 +70,27 @@ function parseScore(response) {
     });
 }
 
-// function loadMercure() {
-//     const url = new URL('https://localhost/.well-known/mercure');
-//     url.searchParams.append('topic', 'https://example.com/my-private-topic');
-//
-//     const eventSource = new EventSource(url);
-//
-//     eventSource.onmessage = e => parseScore(e.data); // do something with the payload
-// }
+function displayNotification() {
+    const alertPopup = document.querySelector('#alert-popup');
+
+    alertPopup.classList.remove('hidden');
+    alertPopup.classList.add('show');
+    setTimeout(function () {
+        alertPopup.classList.add('hidden');
+        alertPopup.classList.remove('show');
+    }, 3000)
+}
+
+function loadMercure() {
+    const url = new URL(serverAddr + ":8081/.well-known/mercure");
+
+    url.searchParams.append('topic', serverAddr + '/tableau-de-score');
+    const eventSource = new EventSource(url);
+    eventSource.onmessage = ({data}) => {
+        displayNotification();
+        parseScore(data);
+    }
+}
 
 loadScore()
-// loadMercure()
+loadMercure()

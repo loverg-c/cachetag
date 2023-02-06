@@ -11,10 +11,10 @@ services:
       - net_backend
     links:
       - database
-#      - mercure
+      - mercure
     depends_on:
       - database
-#      - mercure
+      - mercure
 
   database:
     image: postgres:${POSTGRES_VERSION:-14}-alpine
@@ -35,8 +35,10 @@ services:
     restart: unless-stopped
     links:
       - app:app
+      - mercure:mercure
     depends_on:
       - app
+      - mercure
     ports:
       - "80:80"
     volumes:
@@ -45,24 +47,27 @@ services:
       - $PWD/game:/srv/game
       - caddy_data:/data
       - caddy_config:/config
-#  mercure:
-#    image: dunglas/mercure
-#    restart: unless-stopped
-#    environment:
-#      MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
-#      MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
-#      MERCURE_EXTRA_DIRECTIVES: |-
-#        cors_origins *
+
+  mercure:
+    image: dunglas/mercure
+    restart: unless-stopped
+    environment:
+      SERVER_NAME: ':80'
+      MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_EXTRA_DIRECTIVES: |-
+        cors_origins *
+        anonymous
 #     Uncomment the following line to enable the development mode
-#    command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    networks:
-#      - net_backend
-#    volumes:
-#      - caddy_data:/data
-#      - caddy_config:/config
+    command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
+    ports:
+      - "8081:80"
+      - "4443:443"
+    networks:
+      - net_backend
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
 
 networks:
   net_backend:

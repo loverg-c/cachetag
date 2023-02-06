@@ -2,6 +2,7 @@ package JWT
 
 import (
 	"github.com/golang-jwt/jwt/v4"
+	"log"
 )
 
 func GenerateJWT() string {
@@ -12,7 +13,8 @@ func GenerateJWT() string {
 	})
 
 	// Sign and get the complete encoded token as a string using the secret
-	tokenString, _ := token.SignedString("!ChangeThisMercureHubJWTSecretKey!")
+	tokenString, err := token.SignedString([]byte("!ChangeThisMercureHubJWTSecretKey!"))
+	log.Println(tokenString, err)
 
 	return tokenString
 }
