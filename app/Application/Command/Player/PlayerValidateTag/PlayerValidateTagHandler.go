@@ -12,7 +12,5 @@ func HandlePlayerValidateTag(playerCommand PlayerValidateTag) {
 		TagId:    playerCommand.TagId,
 	}
 
-	//todo check already validated tag here
-
 	repository.NewPlayerHasValidateTag(&playerVTag)
 }

@@ -4,7 +4,7 @@ services:
   app:
     build: app
     ports:
-      - 127.0.0.1:8080:8080
+      - 8080:8080
     volumes:
       - ./app:/app
     networks:
@@ -33,6 +33,10 @@ services:
   front:
     image: caddy
     restart: unless-stopped
+    links:
+      - app:app
+    depends_on:
+      - app
     ports:
       - "80:80"
     volumes:

@@ -145,8 +145,6 @@ function validateTag(tagId, playerId, tagSecret) {
             if (httpRequest.status == 200) {
                 response = JSON.parse(httpRequest.responseText);
 
-                //todo couleur et formatage
-
                 const msg = `Bien joué <span class="surlign">${response.username}</span>!<br><br>
                              Ton nouveau score: <span class="surlign">${response.score} points</span>`;
                 document.querySelector('.wrapper').innerHTML = msg;

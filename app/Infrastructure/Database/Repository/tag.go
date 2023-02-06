@@ -17,7 +17,7 @@ func NewTag(t *m.Tag) {
 
 	query := `
 INSERT INTO tags (description, secret, score, created_at, updated_at)
-VALUES ($1,$2,$3,$4) 
+VALUES ($1,md5(random()::text), $2,$3,$4,) 
 RETURNING id;
 `
 	err := config.Db().QueryRow(query, t.Description, t.Secret, t.Score, t.CreatedAt, t.UpdatedAt).Scan(&t.Id)

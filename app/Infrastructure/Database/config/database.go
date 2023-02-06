@@ -37,7 +37,7 @@ func DatabaseInit() {
 }
 
 func createPlayerTable() {
-	_, err := db.Exec("CREATE TABLE IF NOT EXISTS players(id serial,username varchar(35), created_at timestamp default NULL, updated_at timestamp default NULL, constraint pk_player primary key(id))")
+	_, err := db.Exec("CREATE TABLE IF NOT EXISTS players(id serial,username varchar(35), created_at timestamp default NOW(), updated_at timestamp default NOW(), constraint pk_player primary key(id))")
 
 	if err != nil {
 		log.Fatal(err)
@@ -45,7 +45,7 @@ func createPlayerTable() {
 }
 
 func createTagTable() {
-	_, err := db.Exec("CREATE TABLE IF NOT EXISTS tags(id serial,description varchar(50), secret varchar(50), score integer, created_at timestamp default NULL, updated_at timestamp default NULL, constraint pk_tag primary key(id))")
+	_, err := db.Exec("CREATE TABLE IF NOT EXISTS tags(id serial,description varchar(50), secret varchar(50) default md5(random()::text), score integer default 1500, created_at timestamp default NOW(), updated_at timestamp default NOW(), constraint pk_tag primary key(id))")
 
 	if err != nil {
 		log.Fatal(err)
@@ -53,7 +53,7 @@ func createTagTable() {
 }
 
 func createPlayerHasValidatedTagTable() {
-	_, err := db.Exec("CREATE TABLE IF NOT EXISTS player_has_validate_tag(player_id int, tag_id int, validated_at timestamp default NULL, constraint fk_p foreign key(player_id) REFERENCES players(id), constraint fk_t foreign key(tag_id) REFERENCES tags(id))")
+	_, err := db.Exec("CREATE TABLE IF NOT EXISTS player_has_validate_tag(player_id int, tag_id int, validated_at timestamp default NOW(), constraint fk_p foreign key(player_id) REFERENCES players(id), constraint fk_t foreign key(tag_id) REFERENCES tags(id))")
 
 	if err != nil {
 		log.Fatal(err)
