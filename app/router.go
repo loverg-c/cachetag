@@ -8,6 +8,7 @@ import (
 	"tags-finder/UserInterface/controller/PlayerTag/PlayerHasValidateTagController"
 	"tags-finder/UserInterface/controller/PlayerTag/ValidateTagController"
 	"tags-finder/UserInterface/controller/Tag/ListTagController"
+	"tags-finder/UserInterface/controller/Tag/VerifyTagController"
 )
 
 func InitializeRouter() *mux.Router {
@@ -22,9 +23,12 @@ func InitializeRouter() *mux.Router {
 	router.Methods("GET").Path("/tags").
 		Name("TagIndex").HandlerFunc(ListTagController.TagsIndex)
 
+	router.Methods("POST").Path("/tags/{id:[0-9]+}/verify").
+		Name("VerifyTagIndex").HandlerFunc(VerifyTagController.VerifyTagIndex)
+
 	router.Methods("GET").Path("/players/validated_tags").
 		Name("PlayerHasValidateTagIndex").HandlerFunc(PlayerHasValidateTagController.PlayerHasValidateTagIndex)
-	router.Methods("POST").Path("/players/validated_tags").
+	router.Methods("POST").Path("/players/{id:[0-9]+}/validated_tags").
 		Name("ValidateTagController").HandlerFunc(ValidateTagController.ValidateTagController)
 
 	router.Methods("GET").Path("/players/scores").

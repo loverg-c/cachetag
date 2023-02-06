@@ -16,28 +16,28 @@ func NewTag(t *m.Tag) {
 	t.UpdatedAt = time.Now()
 
 	query := `
-INSERT INTO tags (description, score, created_at, updated_at)
+INSERT INTO tags (description, secret, score, created_at, updated_at)
 VALUES ($1,$2,$3,$4) 
 RETURNING id;
 `
-	err := config.Db().QueryRow(query, t.Description, t.Score, t.CreatedAt, t.UpdatedAt).Scan(&t.Id)
+	err := config.Db().QueryRow(query, t.Description, t.Secret, t.Score, t.CreatedAt, t.UpdatedAt).Scan(&t.Id)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func FindTagById(id int) *m.Tag {
+func FindTagById(id int) (*m.Tag, error) {
 	var tag m.Tag
 
 	row := config.Db().QueryRow("SELECT * FROM tags WHERE id = $1;", id)
-	err := row.Scan(&tag.Id, &tag.Description, &tag.Score, &tag.CreatedAt, &tag.UpdatedAt)
+	err := row.Scan(&tag.Id, &tag.Description, &tag.Secret, &tag.Score, &tag.CreatedAt, &tag.UpdatedAt)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return &tag
+	return &tag, nil
 }
 
 func GetAllTag() *m.Tags {
@@ -45,6 +45,7 @@ func GetAllTag() *m.Tags {
 	query := `
 SELECT id,
        description,
+       secret,
        score, 
        created_at,
        updated_at
@@ -68,6 +69,7 @@ func parseTagsRows(rows *sql.Rows) *m.Tags {
 		var t m.Tag
 		if err := rows.Scan(&t.Id,
 			&t.Description,
+			&t.Secret,
 			&t.Score,
 			&t.CreatedAt,
 			&t.UpdatedAt); err != nil {
@@ -86,13 +88,13 @@ func UpdateTag(tag *m.Tag) {
 	tag.UpdatedAt = time.Now()
 
 	stmt, err := config.Db().
-		Prepare("UPDATE tags SET description=$1, score=$2, updated_at=$3 WHERE id=$4;")
+		Prepare("UPDATE tags SET description=$1, secret=$2, score=$3, updated_at=$4 WHERE id=$5;")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	_, err = stmt.Exec(tag.Description, tag.Score, tag.UpdatedAt, tag.Id)
+	_, err = stmt.Exec(tag.Description, tag.Secret, tag.Score, tag.UpdatedAt, tag.Id)
 
 	if err != nil {
 		log.Fatal(err)

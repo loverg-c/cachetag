@@ -1,4 +1,4 @@
-package Query
+package GetPlayer
 
 import (
 	"tags-finder/Domain/model"

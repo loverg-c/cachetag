@@ -48,7 +48,7 @@ function onRegisterUserResponse(httpRequest) {
             welcome.innerHTML = `Bienvenue <span class="surlign">${username}</span> !!!<br><br>
             Le jeu peut maintenant commencer.<br><br>
             Scan tout les <span class="surlign">tags NFC</span> que tu trouvera.<br><br>
-            Un formulaire s'affichera, sélectionne à ce moment <span class="surlign">ton nom</span> dans la liste et valide.<br><br>
+            Un formulaire s'affichera, sélectionne à ce moment <span class="surlign">${username}</span> dans la liste et valide.<br><br>
             Tu gagnera instantanement un nombre de point associé au tag.<br><br>
             Un tag ne te fera gagner des points <span class="surlign">qu'une seule fois</span>. <br><br><br>
             Que le meilleur gagne !!!

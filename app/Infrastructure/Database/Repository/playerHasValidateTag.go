@@ -67,16 +67,17 @@ func FindByTagId(id int) *m.PlayerHasValidateTags {
 	return parsePlayerHasTagsRows(rows)
 }
 
-func FindByPlayerAndTagId(player_id, tag_id int) *m.PlayerHasValidateTags {
-	rows, err := config.Db().Query("SELECT * FROM player_has_validate_tag WHERE tag_id = $1 AND player_id = $2;", tag_id, player_id)
+func FindByPlayerAndTagId(player_id, tag_id int) (*m.PlayerHasValidateTag, error) {
+	var pht m.PlayerHasValidateTag
+
+	row := config.Db().QueryRow("SELECT player_id, tag_id, validated_at FROM player_has_validate_tag WHERE tag_id = $1 AND player_id = $2;", tag_id, player_id)
+	err := row.Scan(&pht.PlayerId, &pht.TagId, &pht.ValidatedAt)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	defer rows.Close()
-
-	return parsePlayerHasTagsRows(rows)
+	return &pht, nil
 }
 
 func DeleteByPlayer(id int) error {

@@ -13,7 +13,7 @@
 body {
     font-family: Dreamland;
     -webkit-font-smoothing: antialiased;
-    background: #445d80;
+    background: #5881a8;
 }
 
 main {
@@ -25,7 +25,7 @@ main {
 }
 
 .wrapper {
-    color: #586e8d;
+    color: #5a6c98;
     background: white;
     border-radius: 10px;
     font-size: 24px;
@@ -68,7 +68,7 @@ main {
 .wrapper form select {
     background: #f1dc6d;
     font-size: 17px;
-    font-family: Dreamland;
+    background: #f1dc6d5e;
 }
 
 .wrapper form .button {
@@ -95,15 +95,19 @@ main {
     width: 60%;
     background: #f1dc6d5e;
     padding-left: 10px;
-    font-size: 16px;
+    font-size: 17px;
 }
 
 #welcoming-message {
     text-align: center;
     width: 100%;
-    /*color: #5fc100;*/
 }
 
-#welcoming-message .surlign {
+.surlign {
+    font-size: 30px;
     color: #f1dc6d;
+    margin-left: 4px;
+    margin-right: 4px;
+    /*text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;*/
+    text-shadow: 2px 2px 0 #5a6c98, 2px -2px 0 #5a6c98, -2px 2px 0 #5a6c98, -2px -2px 0 #5a6c98, 2px 0px 0 #5a6c98, 0px 2px 0 #5a6c98, -2px 0px 0 #5a6c98, 0px -2px 0 #5a6c98;
 }

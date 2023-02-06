@@ -7,6 +7,7 @@ import (
 type Tag struct {
 	Id          int       `json:"id"`
 	Description string    `json:"description"`
+	Secret      string    `json:"secret"`
 	Score       int       `json:"score"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`

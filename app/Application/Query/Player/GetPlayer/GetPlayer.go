@@ -1,4 +1,4 @@
-package Query
+package GetPlayer
 
 type GetPlayer struct {
 	Username string

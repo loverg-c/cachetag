@@ -45,7 +45,7 @@ func createPlayerTable() {
 }
 
 func createTagTable() {
-	_, err := db.Exec("CREATE TABLE IF NOT EXISTS tags(id serial,description varchar(50), score integer, created_at timestamp default NULL, updated_at timestamp default NULL, constraint pk_tag primary key(id))")
+	_, err := db.Exec("CREATE TABLE IF NOT EXISTS tags(id serial,description varchar(50), secret varchar(50), score integer, created_at timestamp default NULL, updated_at timestamp default NULL, constraint pk_tag primary key(id))")
 
 	if err != nil {
 		log.Fatal(err)

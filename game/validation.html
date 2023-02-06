@@ -13,12 +13,16 @@
 <body>
 <main>
     <div class="wrapper">
-        <h1>Validation de tag</h1>
+        <h1>Validation du tag n° <span id="tagNumber"></span></h1>
         <form action="" id="validation">
             <div class="field">
                 <label for="username">Qui es tu ?</label>
                 <select name="username" id="username">
                 </select>
+            </div>
+            <div class="field">
+                <input type="hidden" id="tagId" value="">
+                <input type="hidden" id="tagSecret" value="">
             </div>
 
             <input class="button" type="submit">

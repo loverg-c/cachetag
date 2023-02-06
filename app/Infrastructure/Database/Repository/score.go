@@ -34,3 +34,21 @@ FROM score
 
 	return &scoreList
 }
+
+func FindScoreByUser(playerId int) (*m.Score, error) {
+	query := `
+SELECT player_id, player_username, score
+FROM score
+WHERE player_id = $1;
+`
+	var score m.Score
+
+	row := config.Db().QueryRow(query, playerId)
+	err := row.Scan(&score.PlayerId, &score.Username, &score.Score)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &score, nil
+}
