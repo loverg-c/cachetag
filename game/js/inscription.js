@@ -17,16 +17,16 @@ form.addEventListener('submit', function (e) {
 
 
 function registerUser(username) {
-    let httpRequest = new XMLHttpRequest();
+    let httpRequestRegisterUser = new XMLHttpRequest();
 
-    httpRequest.onreadystatechange = () => onRegisterUserResponse(httpRequest);
+    httpRequestRegisterUser.onreadystatechange = () => onRegisterUserResponse(httpRequestRegisterUser);
 
     try {
-        httpRequest.open("POST", serverAddr + "/players", true);
+        httpRequestRegisterUser.open("POST", serverAddr + "/players", true);
 
-        httpRequest.setRequestHeader("Content-Type", "application/json");
-        httpRequest.setRequestHeader("Accept", "application/json");
-        httpRequest.send(JSON.stringify({'username': username}));
+        httpRequestRegisterUser.setRequestHeader("Content-Type", "application/json");
+        httpRequestRegisterUser.setRequestHeader("Accept", "application/json");
+        httpRequestRegisterUser.send(JSON.stringify({'username': username}));
     } catch (e) {
         alert(JSON.stringify(e));
     }
@@ -42,6 +42,11 @@ function onRegisterUserResponse(httpRequest) {
         }
         if (httpRequest.status === 200) {
             const username = JSON.parse(httpRequest.responseText).username;
+            const playerId = JSON.parse(httpRequest.responseText).id;
+            localStorage['preferedPlayer'] = playerId;
+            document.cookie = `preferedPlayer=${playerId}`;
+
+
             const welcome = document.createElement('div');
 
             welcome.id = 'welcoming-message';

@@ -3,6 +3,7 @@ package Command
 import (
 	"tags-finder/Domain/model"
 	repository "tags-finder/Infrastructure/Database/Repository"
+	"tags-finder/Infrastructure/Notification/Mercure"
 )
 
 func HandleCreatePlayer(playerCommand CreatePlayer) model.Player {
@@ -12,6 +13,10 @@ func HandleCreatePlayer(playerCommand CreatePlayer) model.Player {
 	}
 
 	repository.NewPlayer(&player)
+
+	Mercure.SendNotificationWithMercure(
+		"http://localhost/tableau-de-score",
+		*repository.GetScorePerPlayers())
 
 	return player
 }
